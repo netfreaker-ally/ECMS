@@ -1,0 +1,64 @@
+// src/main/protos/cache.proto
+
+syntax = "proto3";
+
+option java_package = "com.caching.sidecar.grpc";
+
+// This enum defines the possible outcomes of a cache operation.
+// It's a key part of your API contract.
+enum CacheStatus {
+  // Always set the first value to 0 and make it the success case.
+  SUCCESS = 0;
+  
+  // Application-level errors
+  NOT_FOUND = 1;
+  KEY_EXPIRED = 2;
+
+  // Cache provider errors
+  CACHE_UNAVAILABLE = 3;
+  CONNECTION_ERROR = 4;
+  INVALID_CREDENTIALS = 5;
+  INTERNAL_ERROR = 6;
+}
+
+service Cache {
+  rpc Get (GetRequest) returns (GetResponse);
+  rpc Set (SetRequest) returns (SetResponse);
+  rpc Delete (DeleteRequest) returns (DeleteResponse);
+}
+
+message GetRequest {
+  string key = 1;
+}
+
+message GetResponse {
+  // Use the new enum to report the status of the operation.
+  CacheStatus status = 1;
+
+  // Add a field for the value, which will only be set if the status is SUCCESS.
+  // Optional makes it clear this might not be present.
+  optional bytes value = 2;
+
+  // Add an optional message for more details on the error.
+  optional string message = 3;
+}
+
+message SetRequest {
+  string key = 1;
+  bytes value = 2;
+  int32 ttlSeconds = 3;
+}
+
+message SetResponse {
+  CacheStatus status = 1;
+  optional string message = 2;
+}
+
+message DeleteRequest {
+  string key = 1;
+}
+
+message DeleteResponse {
+  CacheStatus status = 1;
+  optional string message = 2;
+}
