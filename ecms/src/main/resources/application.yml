@@ -1,8 +1,10 @@
 spring:
   application:
     name: ecms
-  main:
-    allow-bean-definition-overriding: true
+  data:
+   redis:
+    host: 127.0.0.1
+    port: 6379
    # dev profile active by default
 
 grpc:
@@ -10,7 +12,9 @@ grpc:
     port: 9090
     reflection-service-enabled: true
 
-# Uncomment and configure Redis if needed
-# redis:
-#   host: localhost
-#   port: 6379
+#spring:
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    password: myStrongPassword
+
