@@ -2329,3 +2329,228 @@ Caused by: java.lang.Error: Unresolved compilation problem:
 2025-09-08T16:28:43.227+05:30  INFO 31024 --- [ecms] [Thread-25] n.d.b.g.s.s.GrpcServerLifecycle          : Completed gRPC server shutdown
 2025-09-08T16:28:43.227+05:30  INFO 31024 --- [ecms] [Thread-25] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
 2025-09-08T16:28:43.236+05:30  INFO 31024 --- [ecms] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-09-08T16:28:43.301+05:30  INFO 31024 --- [ecms] [restartedMain] com.sidecar.ecms.EcmsApplication         : Starting EcmsApplication using Java 23.0.1 with PID 31024 (C:\Users\Hanuma.ramavath\Downloads\ecms\ecms\target\classes started by hanuma.ramavath in C:\Users\Hanuma.ramavath\Downloads\ecms\ecms)
+2025-09-08T16:28:43.302+05:30 DEBUG 31024 --- [ecms] [restartedMain] com.sidecar.ecms.EcmsApplication         : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-08T16:28:43.302+05:30  INFO 31024 --- [ecms] [restartedMain] com.sidecar.ecms.EcmsApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-09-08T16:28:43.573+05:30  INFO 31024 --- [ecms] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-08T16:28:43.573+05:30  INFO 31024 --- [ecms] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-08T16:28:43.589+05:30  INFO 31024 --- [ecms] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2025-09-08T16:28:43.658+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-09-08T16:28:43.659+05:30  INFO 31024 --- [ecms] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-08T16:28:43.659+05:30  INFO 31024 --- [ecms] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-08T16:28:43.677+05:30  INFO 31024 --- [ecms] [restartedMain] o.a.c.c.C.[Tomcat-3].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-09-08T16:28:43.678+05:30  INFO 31024 --- [ecms] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 373 ms
+2025-09-08T16:28:43.757+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-09-08T16:28:43.850+05:30  INFO 31024 --- [ecms] [restartedMain] g.s.a.GrpcServerFactoryAutoConfiguration : Detected grpc-netty-shaded: Creating ShadedNettyGrpcServerFactory
+2025-09-08T16:28:43.874+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.c.a.GrpcClientAutoConfiguration  : Detected grpc-netty-shaded: Creating ShadedNettyChannelFactory + InProcessChannelFactory
+2025-09-08T16:28:43.958+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-09-08T16:28:43.960+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-09-08T16:28:43.980+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-09-08T16:28:43.981+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: CacheService, bean: cacheServiceImpl, class: com.sidecar.ecms.service.CacheServiceImpl
+2025-09-08T16:28:43.981+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: grpc.health.v1.Health, bean: grpcHealthService, class: io.grpc.protobuf.services.HealthServiceImpl
+2025-09-08T16:28:43.981+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: grpc.reflection.v1alpha.ServerReflection, bean: protoReflectionService, class: io.grpc.protobuf.services.ProtoReflectionService
+2025-09-08T16:28:43.983+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.s.s.GrpcServerLifecycle          : gRPC Server started, listening on address: *, port: 9090
+2025-09-08T16:28:43.989+05:30  INFO 31024 --- [ecms] [restartedMain] com.sidecar.ecms.EcmsApplication         : Started EcmsApplication in 0.714 seconds (process running for 2943.541)
+2025-09-08T16:28:43.991+05:30  INFO 31024 --- [ecms] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-09-08T16:28:53.297+05:30  INFO 31024 --- [ecms] [grpc-default-executor-0] c.sidecar.ecms.service.CacheServiceImpl  : Entered set method in CacheServiceImpl
+2025-09-08T16:28:53.324+05:30 DEBUG 31024 --- [ecms] [grpc-default-executor-0] c.sidecar.ecms.service.CacheServiceImpl  : Starting making connection with request: key: "testKey"
+value: "testValue"
+ttl_seconds: 60
+config {
+  cache_type: REDIS
+  provider: SELF_MANAGED
+  endpoints {
+    host: "localhost"
+    port: 6379
+  }
+  use_ssl: false
+  auth_config {
+    auth_type: NONE
+  }
+  extra_properties {
+    key: "dummyKey"
+    value: "dummyValue"
+  }
+  version: "1.0"
+}
+
+2025-09-08T16:28:53.324+05:30  INFO 31024 --- [ecms] [grpc-default-executor-0] c.sidecar.ecms.service.CacheServiceImpl  : Request Has No Connection Id  entering into getOrCreateConnection in cacheConnectionManager
+2025-09-08T16:28:53.324+05:30  INFO 31024 --- [ecms] [grpc-default-executor-0] c.s.ecms.cache.CacheConnectionManager    : Request to get/create connection with ID: null
+2025-09-08T16:28:53.326+05:30 DEBUG 31024 --- [ecms] [grpc-default-executor-0] c.s.ecms.cache.CacheConnectionManager    : Mapped external config to internal config: RedisConnectionConfig(endpoints=[host: "localhost"
+port: 6379
+])
+2025-09-08T17:02:06.345+05:30  INFO 31024 --- [ecms] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-09-08T17:02:06.352+05:30  INFO 31024 --- [ecms] [Thread-30] n.d.b.g.s.s.GrpcServerLifecycle          : Completed gRPC server shutdown
+2025-09-08T17:02:06.353+05:30  INFO 31024 --- [ecms] [Thread-30] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-08T17:02:06.362+05:30  INFO 31024 --- [ecms] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-09-08T17:02:06.466+05:30 ERROR 31024 --- [ecms] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.yaml.snakeyaml.scanner.ScannerException: while scanning a simple key
+ in 'reader', line 4, column 1:
+    <<<<<<< HEAD
+    ^
+could not find expected ':'
+ in 'reader', line 5, column 7:
+      main:
+          ^
+
+	at org.yaml.snakeyaml.scanner.ScannerImpl.stalePossibleSimpleKeys(ScannerImpl.java:517) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.scanner.ScannerImpl.needMoreTokens(ScannerImpl.java:322) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.scanner.ScannerImpl.checkToken(ScannerImpl.java:238) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.parser.ParserImpl$ParseBlockMappingKey.produce(ParserImpl.java:637) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.parser.ParserImpl.peekEvent(ParserImpl.java:161) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.comments.CommentEventsCollector$1.peek(CommentEventsCollector.java:57) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.comments.CommentEventsCollector$1.peek(CommentEventsCollector.java:43) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.comments.CommentEventsCollector.collectEvents(CommentEventsCollector.java:136) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.comments.CommentEventsCollector.collectEvents(CommentEventsCollector.java:116) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeScalarNode(Composer.java:249) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:214) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:396) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:361) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:329) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:218) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:396) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:361) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:329) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:218) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:396) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:361) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:329) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:218) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.getNode(Composer.java:141) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.constructor.BaseConstructor.getData(BaseConstructor.java:163) ~[snakeyaml-2.4.jar:na]
+	at org.springframework.boot.env.OriginTrackedYamlLoader$OriginTrackingConstructor.getData(OriginTrackedYamlLoader.java:99) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.yaml.snakeyaml.Yaml$1.next(Yaml.java:530) ~[snakeyaml-2.4.jar:na]
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:203) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:169) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.boot.env.OriginTrackedYamlLoader.load(OriginTrackedYamlLoader.java:84) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.env.YamlPropertySourceLoader.load(YamlPropertySourceLoader.java:50) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.StandardConfigDataLoader.load(StandardConfigDataLoader.java:54) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.StandardConfigDataLoader.load(StandardConfigDataLoader.java:36) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataLoaders.load(ConfigDataLoaders.java:96) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataImporter.load(ConfigDataImporter.java:132) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataImporter.resolveAndLoad(ConfigDataImporter.java:87) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironmentContributors.withProcessedImports(ConfigDataEnvironmentContributors.java:129) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironment.processInitial(ConfigDataEnvironment.java:245) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironment.processAndApply(ConfigDataEnvironment.java:232) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor.postProcessEnvironment(ConfigDataEnvironmentPostProcessor.java:96) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor.postProcessEnvironment(ConfigDataEnvironmentPostProcessor.java:89) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEnvironmentPreparedEvent(EnvironmentPostProcessorApplicationListener.java:132) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEvent(EnvironmentPostProcessorApplicationListener.java:115) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185) ~[spring-context-6.2.10.jar:6.2.10]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178) ~[spring-context-6.2.10.jar:6.2.10]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156) ~[spring-context-6.2.10.jar:6.2.10]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138) ~[spring-context-6.2.10.jar:6.2.10]
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64) ~[spring-boot-3.5.5.jar:3.5.5]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:313) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.5.jar:3.5.5]
+	at com.sidecar.ecms.EcmsApplication.main(EcmsApplication.java:16) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.5.jar:3.5.5]
+
+2025-09-08T17:06:00.708+05:30 ERROR 31024 --- [ecms] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.yaml.snakeyaml.scanner.ScannerException: while scanning a simple key
+ in 'reader', line 4, column 1:
+    <<<<<<< HEAD
+    ^
+could not find expected ':'
+ in 'reader', line 5, column 7:
+      main:
+          ^
+
+	at org.yaml.snakeyaml.scanner.ScannerImpl.stalePossibleSimpleKeys(ScannerImpl.java:517) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.scanner.ScannerImpl.needMoreTokens(ScannerImpl.java:322) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.scanner.ScannerImpl.checkToken(ScannerImpl.java:238) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.parser.ParserImpl$ParseBlockMappingKey.produce(ParserImpl.java:637) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.parser.ParserImpl.peekEvent(ParserImpl.java:161) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.comments.CommentEventsCollector$1.peek(CommentEventsCollector.java:57) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.comments.CommentEventsCollector$1.peek(CommentEventsCollector.java:43) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.comments.CommentEventsCollector.collectEvents(CommentEventsCollector.java:136) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.comments.CommentEventsCollector.collectEvents(CommentEventsCollector.java:116) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeScalarNode(Composer.java:249) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:214) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:396) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:361) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:329) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:218) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:396) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:361) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:329) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:218) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:396) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:361) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:329) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:218) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.composer.Composer.getNode(Composer.java:141) ~[snakeyaml-2.4.jar:na]
+	at org.yaml.snakeyaml.constructor.BaseConstructor.getData(BaseConstructor.java:163) ~[snakeyaml-2.4.jar:na]
+	at org.springframework.boot.env.OriginTrackedYamlLoader$OriginTrackingConstructor.getData(OriginTrackedYamlLoader.java:99) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.yaml.snakeyaml.Yaml$1.next(Yaml.java:530) ~[snakeyaml-2.4.jar:na]
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:203) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:169) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.boot.env.OriginTrackedYamlLoader.load(OriginTrackedYamlLoader.java:84) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.env.YamlPropertySourceLoader.load(YamlPropertySourceLoader.java:50) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.StandardConfigDataLoader.load(StandardConfigDataLoader.java:54) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.StandardConfigDataLoader.load(StandardConfigDataLoader.java:36) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataLoaders.load(ConfigDataLoaders.java:96) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataImporter.load(ConfigDataImporter.java:132) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataImporter.resolveAndLoad(ConfigDataImporter.java:87) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironmentContributors.withProcessedImports(ConfigDataEnvironmentContributors.java:129) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironment.processInitial(ConfigDataEnvironment.java:245) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironment.processAndApply(ConfigDataEnvironment.java:232) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor.postProcessEnvironment(ConfigDataEnvironmentPostProcessor.java:96) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor.postProcessEnvironment(ConfigDataEnvironmentPostProcessor.java:89) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEnvironmentPreparedEvent(EnvironmentPostProcessorApplicationListener.java:132) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEvent(EnvironmentPostProcessorApplicationListener.java:115) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185) ~[spring-context-6.2.10.jar:6.2.10]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178) ~[spring-context-6.2.10.jar:6.2.10]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156) ~[spring-context-6.2.10.jar:6.2.10]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138) ~[spring-context-6.2.10.jar:6.2.10]
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64) ~[spring-boot-3.5.5.jar:3.5.5]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:313) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.5.jar:3.5.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.5.jar:3.5.5]
+	at com.sidecar.ecms.EcmsApplication.main(EcmsApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.5.jar:3.5.5]
+
+2025-09-08T17:06:06.359+05:30  INFO 31024 --- [ecms] [restartedMain] com.sidecar.ecms.EcmsApplication         : Starting EcmsApplication using Java 23.0.1 with PID 31024 (C:\Users\Hanuma.ramavath\Downloads\ecms\ecms\target\classes started by hanuma.ramavath in C:\Users\Hanuma.ramavath\Downloads\ecms\ecms)
+2025-09-08T17:06:06.359+05:30 DEBUG 31024 --- [ecms] [restartedMain] com.sidecar.ecms.EcmsApplication         : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-08T17:06:06.361+05:30  INFO 31024 --- [ecms] [restartedMain] com.sidecar.ecms.EcmsApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-09-08T17:06:06.834+05:30  INFO 31024 --- [ecms] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-08T17:06:06.835+05:30  INFO 31024 --- [ecms] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-08T17:06:06.853+05:30  INFO 31024 --- [ecms] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2025-09-08T17:06:06.968+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-09-08T17:06:06.970+05:30  INFO 31024 --- [ecms] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-08T17:06:06.970+05:30  INFO 31024 --- [ecms] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-08T17:06:06.995+05:30  INFO 31024 --- [ecms] [restartedMain] o.a.c.c.C.[Tomcat-3].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-09-08T17:06:06.995+05:30  INFO 31024 --- [ecms] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 627 ms
+2025-09-08T17:06:07.118+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-09-08T17:06:07.264+05:30  INFO 31024 --- [ecms] [restartedMain] g.s.a.GrpcServerFactoryAutoConfiguration : Detected grpc-netty-shaded: Creating ShadedNettyGrpcServerFactory
+2025-09-08T17:06:07.307+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.c.a.GrpcClientAutoConfiguration  : Detected grpc-netty-shaded: Creating ShadedNettyChannelFactory + InProcessChannelFactory
+2025-09-08T17:06:07.429+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-09-08T17:06:07.434+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-09-08T17:06:07.461+05:30  INFO 31024 --- [ecms] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-09-08T17:06:07.461+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: CacheService, bean: cacheServiceImpl, class: com.sidecar.ecms.service.CacheServiceImpl
+2025-09-08T17:06:07.462+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: grpc.health.v1.Health, bean: grpcHealthService, class: io.grpc.protobuf.services.HealthServiceImpl
+2025-09-08T17:06:07.462+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: grpc.reflection.v1alpha.ServerReflection, bean: protoReflectionService, class: io.grpc.protobuf.services.ProtoReflectionService
+2025-09-08T17:06:07.495+05:30  INFO 31024 --- [ecms] [restartedMain] n.d.b.g.s.s.GrpcServerLifecycle          : gRPC Server started, listening on address: *, port: 9090
+2025-09-08T17:06:07.504+05:30  INFO 31024 --- [ecms] [restartedMain] com.sidecar.ecms.EcmsApplication         : Started EcmsApplication in 1.2 seconds (process running for 5187.041)
+2025-09-08T17:06:07.508+05:30  INFO 31024 --- [ecms] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

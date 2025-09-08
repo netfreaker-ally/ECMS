@@ -10,6 +10,7 @@ import com.sidecar.ecms.core.config.UserNamePasswordAuthProperties;
 @SpringBootApplication
 @EnableCaching
 @EnableConfigurationProperties(UserNamePasswordAuthProperties.class)
+
 public class EcmsApplication {
 
 	public static void main(String[] args) {
