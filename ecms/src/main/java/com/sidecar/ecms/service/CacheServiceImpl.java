@@ -1,123 +1,151 @@
 package com.sidecar.ecms.service;
 
-import java.io.IOException;
+import java.time.Instant;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.caching.sidecar.grpc.CacheGrpc.CacheImplBase;
-import com.caching.sidecar.grpc.CacheOuterClass.CacheStatus;
-import com.caching.sidecar.grpc.CacheOuterClass.DeleteRequest;
-import com.caching.sidecar.grpc.CacheOuterClass.DeleteResponse;
-import com.caching.sidecar.grpc.CacheOuterClass.GetRequest;
-import com.caching.sidecar.grpc.CacheOuterClass.GetResponse;
-import com.caching.sidecar.grpc.CacheOuterClass.SetRequest;
-import com.caching.sidecar.grpc.CacheOuterClass.SetResponse;
+import com.caching.sidecar.grpc.BatchDeleteRequest;
+import com.caching.sidecar.grpc.BatchGetRequest;
+import com.caching.sidecar.grpc.BatchReply;
+import com.caching.sidecar.grpc.BatchSetRequest;
+import com.caching.sidecar.grpc.CacheServiceGrpc.CacheServiceImplBase;
+import com.caching.sidecar.grpc.DeleteRequest;
+import com.caching.sidecar.grpc.GetReply;
+import com.caching.sidecar.grpc.GetRequest;
+import com.caching.sidecar.grpc.InvalidationEvent;
+import com.caching.sidecar.grpc.OperationMetadata;
+import com.caching.sidecar.grpc.RegisterConnectionReply;
+import com.caching.sidecar.grpc.RegisterConnectionRequest;
+import com.caching.sidecar.grpc.SetRequest;
+import com.caching.sidecar.grpc.StatusReply;
+import com.caching.sidecar.grpc.WatchRequest;
+import com.google.protobuf.ByteString;
+import com.sidecar.ecms.cache.CacheConnectionManager;
+import com.sidecar.ecms.core.connection.CacheConnection;
+import com.sidecar.ecms.core.exception.cache.CacheConnectionException;
 
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 @GrpcService
 @Slf4j
-public class CacheServiceImpl extends CacheImplBase {
-
-	private static final Logger logger = LoggerFactory.getLogger(CacheServiceImpl.class);
-
-	// In a real application, you would replace this with a real cache provider
-	// like Redis, Memcached, or a simple in-memory cache.
-	// For this example, we'll use a simple in-memory map.
-	private static final java.util.concurrent.ConcurrentHashMap<String, byte[]> inMemoryCache = new java.util.concurrent.ConcurrentHashMap<>();
+@RequiredArgsConstructor
+public class CacheServiceImpl extends CacheServiceImplBase {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final CacheConnectionManager cacheConnectionManager;
 
 	@Override
-	public void get(GetRequest request, StreamObserver<GetResponse> responseObserver) {
-		String key = request.getKey();
-		logger.info("Received Get request for key: " + key);
-
-		GetResponse.Builder responseBuilder = GetResponse.newBuilder();
-
-		// Implement your cache retrieval logic here.
-		byte[] value = inMemoryCache.get(key);
-
-		if (value != null) {
-			logger.info("Key found: " + key);
-			responseBuilder.setStatus(CacheStatus.SUCCESS);
-			responseBuilder.setValue(com.google.protobuf.ByteString.copyFrom(value));
-		} else {
-			logger.warn("Key not found: " + key);
-			responseBuilder.setStatus(CacheStatus.NOT_FOUND);
-			responseBuilder.setMessage("Key was not found in the cache.");
-		}
-
-		responseObserver.onNext(responseBuilder.build());
-		responseObserver.onCompleted();
-	}
-
-	@Override
-	public void set(SetRequest request, StreamObserver<SetResponse> responseObserver) {
-		String key = request.getKey();
-		byte[] value = request.getValue().toByteArray();
-		int ttl = request.getTtlSeconds();
-		logger.info("Received Set request for key: " + key + " with TTL: " + ttl + " seconds.");
-
-		SetResponse.Builder responseBuilder = SetResponse.newBuilder();
-
+	public void set(SetRequest request, StreamObserver<StatusReply> responseObserver) {
+		log.info("Entered set method in CacheServiceImpl");
 		try {
-			// Implement your cache insertion logic here.
-			// For this example, we'll just put it in our in-memory map.
-			inMemoryCache.put(key, value);
+			log.debug("Starting making connection with request: " + request);
+			CacheConnection connection;
 
-			// TODO: In a real-world scenario, you would need to implement the TTL logic
-			// using scheduled tasks or a cache provider that supports expiration.
+			if (request.hasConnectionId()) {
+				// Use existing connection
+				log.info("Request Has Connection Id in Request: {}", request.getConnectionId());
+				connection = cacheConnectionManager.getConnectionById(request.getConnectionId())
+						.orElseThrow(() -> new CacheConnectionException("Invalid connection id"));
+			} else {
+				// Create new connection from config
+				log.info("Request Has No Connection Id  entering into getOrCreateConnection in cacheConnectionManager");
 
-			responseBuilder.setStatus(CacheStatus.SUCCESS);
-		} catch (Exception e) {
-			logger.error("Failed to set key: " + key + ", error: " + e.getMessage());
-			responseBuilder.setStatus(CacheStatus.INTERNAL_ERROR);
-			responseBuilder.setMessage("An internal error occurred while setting the value.");
+				connection = cacheConnectionManager.getOrCreateConnection(request.getConfig(), null);
+			}
+
+			Optional<Instant> absoluteExpiration = request.hasAbsoluteExpiration()
+					? Optional.of(Instant.ofEpochSecond(request.getAbsoluteExpiration().getSeconds(),
+							request.getAbsoluteExpiration().getNanos()))
+					: Optional.empty();
+			log.info("Setting key {} value {} ttl{} absoluteExpiration {}", request.getKey(), request.getValue(),
+					request.getTtlSeconds(), absoluteExpiration);
+			connection.set(request.getKey(), request.getValue(), request.getTtlSeconds(), absoluteExpiration);
+
+			// Build response
+			StatusReply reply = StatusReply.newBuilder().setStatus(StatusReply.Status.SUCCESS)
+					.setMessage("Key set successfully")
+					.setMetaData(OperationMetadata.newBuilder().setNodeUsed("DemoCtnId:111") // store
+																								// connectionId
+																								// in
+																								// metadata
+							.build())
+					.build();
+			log.info("Status Reply Build SuccessFully and attaching to responseObserver: {}", reply);
+			responseObserver.onNext(reply);
+			responseObserver.onCompleted();
+
+		} // | CacheOperationException haveToAdd when accessing connectionId
+		catch (CacheConnectionException e) {
+			log.error("Exception Occcured in CacheServiceImpl set method with error code {} and error message: {}"
+					+ e.getErrorCode(), e.getMessage());
+			StatusReply reply = StatusReply.newBuilder().setStatus(StatusReply.Status.FAILURE)
+					.setMessage(e.getMessage()).build();
+			responseObserver.onNext(reply);
+			responseObserver.onCompleted();
 		}
-
-		responseObserver.onNext(responseBuilder.build());
-		responseObserver.onCompleted();
 	}
 
 	@Override
-	public void delete(DeleteRequest request, StreamObserver<DeleteResponse> responseObserver) {
-		String key = request.getKey();
-		logger.info("Received Delete request for key: " + key);
+	public void get(GetRequest request, StreamObserver<GetReply> responseObserver) {
+		System.out.println("Received a GetRequest for key: " + request.getKey());
 
-		DeleteResponse.Builder responseBuilder = DeleteResponse.newBuilder();
+		boolean keyFound = false;
 
-		// Implement your cache deletion logic here.
-		inMemoryCache.remove(key);
+		if (keyFound) {
+			GetReply reply = GetReply.newBuilder().setStatus(StatusReply.Status.SUCCESS)
+					.setValue(ByteString.copyFromUtf8("Hello from the cache!")).build();
+			responseObserver.onNext(reply);
+		} else {
+			GetReply reply = GetReply.newBuilder().setStatus(StatusReply.Status.KEY_NOT_FOUND).build();
+			responseObserver.onNext(reply);
+		}
 
-		// We can always return SUCCESS here since the goal is to ensure the key is
-		// gone.
-		responseBuilder.setStatus(CacheStatus.SUCCESS);
-
-		responseObserver.onNext(responseBuilder.build());
 		responseObserver.onCompleted();
 	}
 
 	/**
-	 * Main method to start the gRPC server. This is for demonstration purposes and
-	 * shows how to set up and run the service.
 	 */
-	public static void main(String[] args) throws IOException, InterruptedException {
-		int port = 50051;
-		Server server = ServerBuilder.forPort(port).addService(new CacheServiceImpl()).build().start();
-		logger.info("Server started, listening on port " + port);
+	@Override
+	public void delete(DeleteRequest request, StreamObserver<StatusReply> responseObserver) {
 
-		// Add a shutdown hook to gracefully shut down the server.
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			System.err.println("*** shutting down gRPC server since JVM is shutting down");
-			server.shutdown();
-			System.err.println("*** server shut down");
-		}));
+	}
 
-		// Keep the server running until the application is terminated.
-		server.awaitTermination();
+	/**
+	 */
+	@Override
+	public void batchSet(BatchSetRequest request, StreamObserver<BatchReply> responseObserver) {
+
+	}
+
+	/**
+	 */
+	public void batchGet(BatchGetRequest request, StreamObserver<BatchReply> responseObserver) {
+
+	}
+
+	/**
+	 */
+	@Override
+	public void batchDelete(BatchDeleteRequest request, StreamObserver<BatchReply> responseObserver) {
+
+	}
+
+	/**
+	 */
+	@Override
+	public void watchKeys(WatchRequest request, StreamObserver<InvalidationEvent> responseObserver) {
+
+	}
+
+	/**
+	 */
+	@Override
+	public void registerConnection(RegisterConnectionRequest request,
+			StreamObserver<RegisterConnectionReply> responseObserver) {
+
 	}
 }

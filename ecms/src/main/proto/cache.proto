@@ -3,62 +3,227 @@
 syntax = "proto3";
 
 option java_package = "com.caching.sidecar.grpc";
+import "google/protobuf/timestamp.proto";
+option java_multiple_files = true;
 
-// This enum defines the possible outcomes of a cache operation.
-// It's a key part of your API contract.
-enum CacheStatus {
-  // Always set the first value to 0 and make it the success case.
-  SUCCESS = 0;
-  
-  // Application-level errors
-  NOT_FOUND = 1;
-  KEY_EXPIRED = 2;
-
-  // Cache provider errors
-  CACHE_UNAVAILABLE = 3;
-  CONNECTION_ERROR = 4;
-  INVALID_CREDENTIALS = 5;
-  INTERNAL_ERROR = 6;
+// ---------------------------
+// Metadata & Status
+// ---------------------------
+message OperationMetadata {
+  int64 latency_ms = 1;        // time taken for this operation
+  int32 retry_count = 2;       // number of retries
+  bool cache_hit = 3;          // true if cache hit, false if miss
+  string node_used = 4;        // optional: which node served the request
+  string additional_info = 5;  // optional free-form info
 }
 
-service Cache {
-  rpc Get (GetRequest) returns (GetResponse);
-  rpc Set (SetRequest) returns (SetResponse);
-  rpc Delete (DeleteRequest) returns (DeleteResponse);
+message StatusReply {
+  enum Status {
+    SUCCESS = 0;
+    FAILURE = 1;
+    KEY_NOT_FOUND = 2;
+    TIMEOUT = 3;
+    INVALID_AUTH = 4;
+  }
+  Status status = 1;
+  string message = 2; // Optional message for more detail on the status.
+  OperationMetadata metaData = 3;
+}
+
+// ---------------------------
+// Cache types & auth
+// ---------------------------
+enum CacheType {
+  CACHE_TYPE_UNSPECIFIED = 0;
+  REDIS = 1;
+  MEMCACHED = 2;
+  HAZELCAST = 3;
+  IGNITE = 4;
+  INFINISPAN = 5;
+  COHERENCE = 6;
+  AEROSPIKE = 7;
+  EHCACHE = 10;
+  CAFFEINE = 11;
+}
+
+enum AuthenticationType {
+  AUTH_TYPE_UNSPECIFIED = 0;
+  USERNAME_PASSWORD = 1;
+  TOKEN = 2;
+  CERTIFICATE = 3;
+  SASL = 4;
+  KERBEROS = 5;
+  CLOUD_IDENTITY = 6;
+  NONE = 99;
+}
+
+message AuthConfig {
+  AuthenticationType auth_type = 1;
+  oneof auth_details {
+    UsernamePasswordConfig username_password_config = 2;
+    TokenConfig token_config = 3;
+    CertificateConfig certificate_config = 4;
+    SaslConfig sasl_config = 5;
+    KerberosConfig kerberos_config = 6;
+    CloudIdentityConfig cloud_identity_config = 7;
+  }
+}
+
+message UsernamePasswordConfig {
+  string username = 1;
+  string password = 2;
+}
+
+message TokenConfig {
+  string token = 1;
+  string issuer = 2;
+  google.protobuf.Timestamp expiration = 3;
+}
+
+message CertificateConfig {
+  string cert_chain = 1;
+  string private_key = 2;
+  string ca_cert = 3;
+}
+
+message SaslConfig {
+  string mechanism = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message KerberosConfig {
+  string principal = 1;
+  string keytab_path = 2;
+  string realm = 3;
+  string kdc = 4;
+}
+
+message CloudIdentityConfig {
+  string provider = 1;
+  string role = 2;
+  string audience = 3;
+}
+
+message Endpoint {
+  string host = 1;
+  int32 port = 2;
+}
+
+enum CacheProvider {
+  PROVIDER_UNSPECIFIED = 0;
+  AWS = 1;
+  GCP = 2;
+  AZURE = 3;
+  SELF_MANAGED = 10;
+}
+
+// ---------------------------
+// Connection
+// ---------------------------
+message CacheConnectionConfig {
+  CacheType cache_type = 1;
+  CacheProvider provider = 2;
+  repeated Endpoint endpoints = 3;
+  optional bool use_ssl = 4;
+  optional string ssl_protocol = 5;
+  optional bool skip_hostname_verification = 6;
+  AuthConfig auth_config = 7;
+  map<string, string> extra_properties = 8;
+  string version = 9;
+}
+
+message RegisterConnectionRequest {
+  CacheConnectionConfig config = 1;
+}
+
+message RegisterConnectionReply {
+  string connection_id = 1;
+  StatusReply.Status status = 2;
+  OperationMetadata metadata = 3;
+}
+
+// ---------------------------
+// Cache operations
+// ---------------------------
+message SetRequest {
+  string key = 1;
+  bytes value = 2;
+  int32 ttl_seconds = 3;
+  optional google.protobuf.Timestamp absolute_expiration = 4;
+  oneof connection {
+    CacheConnectionConfig config = 5;
+    string connection_id = 6;
+  }
 }
 
 message GetRequest {
   string key = 1;
+  oneof connection {
+    CacheConnectionConfig config = 2;
+    string connection_id = 3;
+  }
 }
 
-message GetResponse {
-  // Use the new enum to report the status of the operation.
-  CacheStatus status = 1;
 
-  // Add a field for the value, which will only be set if the status is SUCCESS.
-  // Optional makes it clear this might not be present.
-  optional bytes value = 2;
-
-  // Add an optional message for more details on the error.
-  optional string message = 3;
-}
-
-message SetRequest {
-  string key = 1;
+message GetReply {
+  StatusReply.Status status = 1;
   bytes value = 2;
-  int32 ttlSeconds = 3;
-}
-
-message SetResponse {
-  CacheStatus status = 1;
-  optional string message = 2;
+  OperationMetadata metadata = 3;
 }
 
 message DeleteRequest {
   string key = 1;
+  oneof connection {
+    CacheConnectionConfig config = 2;
+    string connection_id = 3;
+  }
 }
 
-message DeleteResponse {
-  CacheStatus status = 1;
-  optional string message = 2;
+message BatchSetRequest {
+  repeated SetRequest items = 1;
+}
+
+message BatchGetRequest {
+  repeated GetRequest keys = 1;
+}
+
+message BatchDeleteRequest {
+  repeated DeleteRequest keys = 1;
+}
+
+message BatchReply {
+  repeated StatusReply results = 1;
+  RegisterConnectionReply connectionReply = 2;
+  OperationMetadata metadata = 3;
+}
+
+// ---------------------------
+// Watch / Invalidation
+// ---------------------------
+message WatchRequest {
+  repeated string keys = 1;
+  repeated string prefixes = 2;
+  string connection_id = 3;
+}
+
+message InvalidationEvent {
+  string key = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  StatusReply.Status event_type = 3; // SET, DELETE
+}
+
+// ---------------------------
+// Service definition
+// ---------------------------
+service CacheService {
+  rpc Set(SetRequest) returns (StatusReply);
+  rpc Get(GetRequest) returns (GetReply);
+  rpc Delete(DeleteRequest) returns (StatusReply);
+  rpc BatchSet(BatchSetRequest) returns (BatchReply);
+  rpc BatchGet(BatchGetRequest) returns (BatchReply);
+  rpc BatchDelete(BatchDeleteRequest) returns (BatchReply);
+  rpc WatchKeys(WatchRequest) returns (stream InvalidationEvent);
+  rpc RegisterConnection(RegisterConnectionRequest) returns (RegisterConnectionReply);
+  
 }
